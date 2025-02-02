@@ -37,4 +37,25 @@ router.post('/', jsonParser, async function (req, res, next) {
 	}
 });
 
+// Delete a pizza
+router.delete('/', jsonParser, async function (req, res, next) {
+	try {
+		// Validate input
+		const { Name } = req.body;
+		if (!Name) {
+			return res.status(400).send({ statuscode: 400, message: 'Dish name is required' });
+		}
+
+		// Call the service to delete the dish
+		let result = await dishesService.deleteDish(Name);
+
+		// Return success message
+		res.status(200).send({ statuscode: 200, message: 'Dish deleted successfully', result });
+	} catch (error) {
+		// Handle unexpected errors
+		console.error(error);  // Log the error for debugging
+		res.status(500).send({ statuscode: 500, message: error.message });
+	}
+});
+
 module.exports = router;

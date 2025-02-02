@@ -56,5 +56,10 @@ class DishesService {
 		let Dishes = await this.client.query(`SELECT Dishes.Id, Dishes.Name as DishName, Countries.Name as Country FROM Dishes JOIN Countries on Dishes.CountryId = Countries.Id WHERE Dishes.name = '${dishname}'`, { type: QueryTypes.SELECT });
 		return Dishes;
 	}
+
+	async deleteDish(dishname) {
+		let Dish = await this.client.query(`DELETE FROM defaultdb.Dishes WHERE Name = '${dishname}'`, { type: QueryTypes.DELETE });
+		return Dish;
+	}
 }
 module.exports = DishesService;
